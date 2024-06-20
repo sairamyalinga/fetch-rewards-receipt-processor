@@ -10,13 +10,13 @@ type Item struct {
 }
 
 type Receipt struct {
-	Retailer     string    `json:"retailer"`
-	PurchaseDate string    `json:"purchaseDate"`
-	PurchaseTime string    `json:"purchaseTime"`
-	Items        []Item    `json:"items"`
-	ID           uuid.UUID `json:"id"`
+	Retailer     string  `json:"retailer"`
+	PurchaseDate string  `json:"purchaseDate"`
+	PurchaseTime string  `json:"purchaseTime"`
+	Items        []Item  `json:"items"`
+	Total        float64 `json:"total,string"`
 }
 
 type ReceiptProcessor struct {
-	receipts []Receipt
+	receipts map[uuid.UUID]Receipt
 }
