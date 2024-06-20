@@ -13,7 +13,7 @@ func (rp *ReceiptProcessor) AddReceipt(ctx *gin.Context) {
 
 	if err := ctx.ShouldBindJSON(&receipt); err != nil {
 		fmt.Printf("invalid data format: %v\n", err)
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid data format"})
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "The receipt is invalid"})
 		return
 	}
 
@@ -24,10 +24,10 @@ func (rp *ReceiptProcessor) AddReceipt(ctx *gin.Context) {
 }
 
 func (rp *ReceiptProcessor) GetPoints(ctx *gin.Context) {
-	receiptID, err := uuid.Parse(ctx.Param("id"))
-	if err != nil {
-		fmt.Printf("invalid receipt ID: %v\n", err)
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid receipt ID"})
+	receiptID, _ := uuid.Parse(ctx.Param("id"))
+	if _, ok := rp.receipts[receiptID]; !ok {
+		fmt.Printf("invalid receipt ID: %s\n", ctx.Param("id"))
+		ctx.JSON(http.StatusNotFound, gin.H{"message": "No receipt found for that id"})
 		return
 	}
 
