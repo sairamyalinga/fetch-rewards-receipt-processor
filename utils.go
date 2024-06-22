@@ -52,7 +52,7 @@ func (rp *ReceiptProcessor) calculatePoints(receiptID uuid.UUID) uint64 {
 
 	// 10 points if the time of purchase is after 2:00pm and before 4:00pm.
 	// Assumption: 2:00pm and 4:00pm are inclusive
-	if receiptDateTime.Hour() >= 14 && receiptDateTime.Hour() <= 16 {
+	if receiptDateTime.Hour() >= 14 && receiptDateTime.Hour() < 16 {
 		points += 10
 	}
 
